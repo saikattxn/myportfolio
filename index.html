@@ -6,7 +6,8 @@
 <meta property="og:title" content="Muhammad Al Asif">
 <meta property="og:description" content="Supply chain & logistics professional, computer scientist and CEO of Scrabbl Technologies Limited.">
 <meta property="og:image" content="assets/ash.webp">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%224%22 fill=%22%23F0A63A%22/%3E%3Ctext x=%2216%22 y=%2222%22 font-family=%22Arial%22 font-weight=%22900%22 font-size=%2215%22 text-anchor=%22middle%22 fill=%22%231A1206%22%3EAA%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Muhammad Al Asif</title>
 <meta name="description" content="Muhammad Al Asif — supply chain and logistics professional, computer scientist and CEO of Scrabbl Technologies Limited.">
@@ -58,7 +59,9 @@ p{margin:0}
 .nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 .nav .wrap{display:flex;align-items:center;gap:20px;height:60px}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-display);font-weight:800;font-size:1.35rem;letter-spacing:.04em;text-transform:uppercase}
-.brand-mark{display:grid;place-items:center;width:30px;height:30px;background:var(--accent);color:var(--accent-ink);font-size:.95rem;border-radius:3px}
+.brand-mark{position:relative;display:block;width:38px;height:38px;border-radius:50%;overflow:hidden;background:#fff;box-shadow:0 0 0 2px var(--accent);transition:transform .3s,box-shadow .3s;flex:none}
+.brand-mark img{display:block;width:100%;height:100%;object-fit:cover}
+.brand:hover .brand-mark{transform:rotate(-6deg) scale(1.06);box-shadow:0 0 0 2px var(--accent),0 0 0 6px var(--accent-soft)}
 .nav-links{display:flex;gap:4px;margin-left:auto}
 .nav-links a{text-decoration:none;font-size:.88rem;color:var(--muted);padding:6px 10px;border-radius:4px;transition:color .2s,background .2s}
 .nav-links a:hover,.nav-links a.on{color:var(--fg);background:var(--bg-3)}
@@ -432,7 +435,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
 <body>
 <nav class="nav" aria-label="Main">
   <div class="wrap">
-    <a class="brand" href="#top"><span class="brand-mark">AA</span>Al Asif</a>
+    <a class="brand" href="#top"><span class="brand-mark"><img src="assets/logo.webp" alt="" width="38" height="38"></span>Al Asif</a>
     <div class="nav-links">
       <a href="#about">About</a>
       <a href="#experience">Experience</a>
