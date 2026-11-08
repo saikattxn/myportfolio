@@ -2,7 +2,7 @@
 
 Personal portfolio website: supply chain & logistics professional, computer scientist, and CEO of Scrabbl Technologies Limited.
 
-**Live site:** https://saikattxn.github.io/myportfolio/
+**Hosting:** Vercel (deploys automatically on every push to `main`)
 
 ## Structure
 
@@ -11,4 +11,4 @@ Personal portfolio website: supply chain & logistics professional, computer scie
 
 ## Editing
 
-Open `index.html` in any editor, change the text, commit and push. GitHub Pages republishes automatically within a minute or two.
+Open `index.html` in any editor, change the text, commit and push to `main`. Vercel redeploys automatically within a minute.
