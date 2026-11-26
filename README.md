@@ -2,7 +2,7 @@
 
 Personal portfolio website: supply chain & logistics professional, computer scientist, and CEO of Scrabbl Technologies Limited.
 
-**Live site:** https://www.alasif.online
+**Live site:** https://alasif.online
 
 **Hosting:** Vercel (deploys automatically on every push to `main`)
 
