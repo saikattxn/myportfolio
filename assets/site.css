@@ -528,3 +528,6 @@ body.sub section.block:first-of-type{padding-top:72px}
 .fdel-tag:hover{color:var(--accent)}
 @media (max-width:560px){.tk-txt{display:none}}
 @media (max-width:560px){.fdel-truck{width:118px}}
+.parcel{position:absolute;display:block;background:var(--accent);border-radius:2px;box-shadow:inset 0 -2px 0 color-mix(in srgb,#000 25%,var(--accent));z-index:0}
+.fdel-word{position:relative;z-index:1}
+.fdel-truck{z-index:2}
