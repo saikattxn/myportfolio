@@ -50,25 +50,6 @@
     els.forEach(el=>io.observe(el));
   }
 
-  /* footer: rising name + dispatch toast */
-  const sf=document.getElementById('siteFoot'), ft=document.getElementById('ftoast');
-  if(sf&&ft){
-    let dismissed=false;
-    const show=()=>{ if(!dismissed) ft.classList.add('show'); };
-    const hide=()=>ft.classList.remove('show');
-    if('IntersectionObserver' in window){
-      const fo=new IntersectionObserver(es=>es.forEach(e=>{
-        if(e.isIntersecting){ sf.classList.add('in'); clearTimeout(sf._t); sf._t=setTimeout(show,reduce?0:650); }
-        else { sf.classList.remove('in'); clearTimeout(sf._t); hide(); }
-      }),{threshold:.35});
-      fo.observe(sf);
-    } else { sf.classList.add('in'); show(); }
-    document.getElementById('fbot').addEventListener('click',()=>{ dismissed=false; ft.classList.contains('show')?hide():show(); });
-    document.getElementById('ftClose').addEventListener('click',()=>{ dismissed=true; hide(); });
-    document.getElementById('ftReplay').addEventListener('click',()=>{ hide(); sf.classList.remove('in'); setTimeout(()=>{ sf.classList.add('in'); show(); },250); });
-    ft.querySelector('.ft-btn').addEventListener('click',e=>{ e.preventDefault(); window.scrollTo({top:0,behavior:reduce?'auto':'smooth'}); });
-  }
-
   /* mobile menu */
   const mb=document.getElementById('menuBtn'), mn=document.getElementById('mnav');
   if(mb&&mn) mb.addEventListener('click',()=>{ const open=mn.hidden; mn.hidden=!open; mb.setAttribute('aria-expanded',String(open)); });
