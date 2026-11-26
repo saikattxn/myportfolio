@@ -492,13 +492,17 @@ body.sub section.block:first-of-type{padding-top:72px}
 .cvbox .mono{color:var(--accent);font-size:.68rem}
 .cvbox b{font-size:1.05rem}
 .cvbox .muted{font-size:.85rem}
-.site-foot{border-top:1px solid var(--line);padding-block:48px 28px}
-.foot-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr);gap:32px}
-@media (max-width:720px){.foot-grid{grid-template-columns:1fr 1fr}.foot-grid>div:first-child{grid-column:1/-1}}
-.foot-grid>div{display:grid;gap:8px;align-content:start}
-.foot-grid .mono{color:var(--accent);font-size:.7rem;margin-bottom:4px}
-.foot-grid a{text-decoration:none;color:var(--muted);font-size:.92rem;width:fit-content}
-.foot-grid a:hover{color:var(--fg)}
-.foot-grid .brand{color:var(--fg)}
-.foot-grid p{max-width:36ch;font-size:.9rem}
-.foot-base{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;color:var(--muted);margin-top:36px;padding-top:20px;border-top:1px solid var(--line);font-size:.72rem}
+.site-foot{position:relative;overflow:hidden;border-top:1px solid var(--line);padding-top:56px;background:var(--bg-2)}
+.site-foot .wrap{display:block;color:var(--fg)}
+.fcta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px 32px;padding-bottom:40px;border-bottom:1px solid var(--line)}
+.fcta-t{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:clamp(2rem,4.6vw,3.4rem);line-height:.95;max-width:16ch;text-wrap:balance}
+.fcta-b{display:flex;flex-wrap:wrap;gap:12px}
+.frow{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;padding-block:28px}
+.flinks{display:flex;flex-wrap:wrap;gap:6px 26px}
+.flinks a{text-decoration:none;color:var(--muted);font-size:.95rem;transition:color .2s}
+.flinks a:hover{color:var(--accent)}
+.fbase{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px;padding-block:18px;border-top:1px solid var(--line);color:var(--muted);font-size:.7rem}
+.fbase a{color:inherit;text-decoration:none}
+.fbase a:hover{color:var(--accent)}
+.fmark{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(5rem,22vw,19rem);line-height:.78;letter-spacing:-.01em;text-align:center;white-space:nowrap;color:transparent;-webkit-text-stroke:1px color-mix(in srgb,var(--accent) 45%,transparent);margin-top:8px;margin-bottom:-.12em;user-select:none;pointer-events:none}
+@media (max-width:560px){.frow{flex-direction:column;align-items:flex-start}.fbase{flex-direction:column}}
