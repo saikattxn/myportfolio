@@ -55,5 +55,17 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/experience",
+      "destination": "/timeline",
+      "permanent": true
+    },
+    {
+      "source": "/experience.html",
+      "destination": "/timeline",
+      "permanent": true
+    }
   ]
 }

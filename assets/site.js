@@ -60,11 +60,12 @@
       const x=-tw+p*(W+tw*2);                     // truck travels from off-left to off-right
       truck.style.setProperty('--tx',x+'px');
       word.style.setProperty('--hide',Math.max(0,W-x)+'px'); }; // reveal everything behind the truck
-    const finish=()=>{ fd.classList.remove('moving'); fd.classList.add('done'); word.style.setProperty('--hide','0px'); truck.style.setProperty('--tx',(fd.clientWidth+400)+'px'); };
+    const finish=()=>{ try{ sessionStorage.setItem('aa-delivered','1'); }catch(e){} fd.classList.remove('moving'); fd.classList.add('done'); word.style.setProperty('--hide','0px'); truck.style.setProperty('--tx',(fd.clientWidth+400)+'px'); };
     const run=()=>{ if(ran) return; ran=true; fd.classList.add('moving'); const t0=performance.now(), dur=3200;
       const step=now=>{ const t=Math.min(1,(now-t0)/dur); place(ease(t)); if(t<1) raf=requestAnimationFrame(step); else finish(); };
       raf=requestAnimationFrame(step); };
-    if(reduce || !('IntersectionObserver' in window)){ finish(); }
+    let seen=false; try{ seen=sessionStorage.getItem('aa-delivered')==='1'; }catch(e){}
+    if(reduce || seen || !('IntersectionObserver' in window)){ finish(); }
     else {
       place(0);
       const io2=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ run(); io2.disconnect(); } }),{threshold:.6});

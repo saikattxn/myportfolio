@@ -522,5 +522,7 @@ body.sub section.block:first-of-type{padding-top:72px}
 .fdel.moving .tk-wheel{animation:spin .5s linear infinite}
 .fdel.moving .tk-body{animation:tkbump .22s ease-in-out infinite alternate}
 @keyframes tkbump{to{transform:translateY(-1.2px)}}
-.fdel-tag{display:block;text-align:right;margin-top:10px;padding-right:max(16px,env(safe-area-inset-right,0px));font-size:.7rem;color:var(--live);opacity:0;transform:translateY(6px);transition:opacity .5s,transform .5s}
+.fdel-tag{display:block;width:fit-content;margin-left:auto;text-decoration:none;text-align:right;margin-top:10px;padding-right:max(16px,env(safe-area-inset-right,0px));font-size:.7rem;color:var(--live);opacity:0;transform:translateY(6px);transition:opacity .5s,transform .5s}
 .fdel.done .fdel-tag{opacity:1;transform:none}
+.fdel-tag:hover{color:var(--accent)}
+@media (max-width:560px){.tk-txt{display:none}}
