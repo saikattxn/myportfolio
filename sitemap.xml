@@ -3,10 +3,39 @@
   <url>
     <loc>https://alasif.online/</loc>
     <lastmod>2026-11-26</lastmod>
-    <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://alasif.online/assets/og-image.jpg</image:loc>
     </image:image>
+  </url>
+  <url>
+    <loc>https://alasif.online/about</loc>
+    <lastmod>2026-11-26</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://alasif.online/experience</loc>
+    <lastmod>2026-11-26</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://alasif.online/projects</loc>
+    <lastmod>2026-11-26</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://alasif.online/ventures</loc>
+    <lastmod>2026-11-26</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://alasif.online/expertise</loc>
+    <lastmod>2026-11-26</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://alasif.online/contact</loc>
+    <lastmod>2026-11-26</lastmod>
+    <priority>0.8</priority>
   </url>
 </urlset>
