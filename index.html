@@ -437,7 +437,7 @@ h3{font-size:1.2rem;font-weight:600;line-height:1.3}
 .v-name{display:block;text-decoration:none;transition:opacity .2s}
 .v-name:hover{opacity:.85}
 .v-visit{display:inline-flex;align-items:center;gap:8px;margin-top:22px}
-.xlink{color:inherit;text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:3px;text-decoration-thickness:1px;transition:color .2s}
+.xlink{color:inherit;text-decoration:none;transition:color .2s}
 .xlink:hover{color:var(--accent)}
 .v-lede{margin-top:20px!important;color:var(--fg)!important;font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:2rem;line-height:1;letter-spacing:.01em}
 .v-lede span{color:var(--live)}
@@ -684,7 +684,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
       <div class="bio reveal">
         <p class="big">I started in computer science in Dhaka, learned operations by doing them, and moved to London to study how global supply chains actually work.</p>
         <p class="muted">At Photolab Trading I managed orders from supplier purchase order to customer delivery. At QuickTech IT Solutions I kept 30+ client projects on schedule, and as co-founder and COO of dev.resolved I ran the operations of a growing tech venture. Running Ace Events taught me the unglamorous side of logistics: suppliers, staffing and on-the-day problems that don't wait. In the UK I led operations for a busy restaurant group, handling stock, deliveries and rotas, while completing my MSc at the University of Hull.</p>
-        <p class="muted">With three partners I founded <a class="xlink" href="https://scrabbl.dev" target="_blank" rel="noopener">Scrabbl Technologies</a>, a software studio whose team builds from Bangladesh, and in September 2026 we registered it in the UK. As CEO, I bring the operations mindset to software: understand the process first, then build the tool that removes the friction.</p>
+        <p class="muted">I founded <a class="xlink" href="https://scrabbl.dev" target="_blank" rel="noopener">Scrabbl Technologies</a>, a software studio whose engineering team builds from Bangladesh, and in September 2026 we registered it in the UK. As CEO, I bring the operations mindset to software: understand the process first, then build the tool that removes the friction.</p>
         <p class="quote">Good supply chains are <em>invisible</em>. My job is to make the work behind them visible, measurable and better.</p>
       </div>
       <div class="principles reveal" role="list">
@@ -1084,15 +1084,14 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
   /* network canvas */
   const cv=document.getElementById('net'), ctx=cv.getContext('2d');
   let W=0,H=0,nodes=[],edges=[],packets=[],mouse={x:-999,y:-999};
-  let named={}, route=[], rp=0;
-  const W_STOPS=()=>window.innerWidth<900?[['DAC',.06,.985],['IUB',.94,.985],['HULL',.94,.02],['LON',.06,.02]]:[['DAC',.03,.965],['IUB',.52,.965],['HULL',.555,.07],['LON',.965,.1]];
+  let named={};
   function build(){
     const r=cv.getBoundingClientRect(); const dpr=Math.min(window.devicePixelRatio||1,2);
     W=r.width;H=r.height;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
     let s=11; const rr=()=>{s=(s*9301+49297)%233280;return s/233280;};
     const n=W<700?11:16; nodes=[];
     for(let i=0;i<n;i++){ nodes.push({x:(.06+.88*((i+rr()*.8)/n))*W, y:(.12+.76*rr())*H}); }
-    named={}; route=W_STOPS().map(([lbl,fx,fy])=>{ nodes.push({x:fx*W,y:fy*H}); const k=nodes.length-1; named[k]=lbl; return k; });
+    named=n>11?{0:'DAC',2:'IUB',5:'HULL',8:'LON'}:{0:'DAC',3:'IUB',6:'HULL',9:'LON'};
     edges=[]; nodes.forEach((a,i)=>{ const d=nodes.map((b,j)=>({j,d:Math.hypot(a.x-b.x,a.y-b.y)})).filter(o=>o.j!==i).sort((p,q)=>p.d-q.d);
       d.slice(0,2).forEach(o=>{ if(!edges.some(e=>(e[0]===i&&e[1]===o.j)||(e[0]===o.j&&e[1]===i))) edges.push([i,o.j]); }); });
     packets=edges.map((e,k)=>({e:k,t:rr(),v:.0012+rr()*.0025}));
@@ -1105,15 +1104,9 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
     packets.forEach(p=>{ const [a,b]=edges[p.e]; if(!reduce){p.t+=p.v; if(p.t>1)p.t=0;}
       const x=nodes[a].x+(nodes[b].x-nodes[a].x)*p.t, y=nodes[a].y+(nodes[b].y-nodes[a].y)*p.t;
       ctx.fillStyle=acc; ctx.globalAlpha=.85; ctx.fillRect(x-2,y-2,4,4); ctx.globalAlpha=1; });
-    // career route DAC -> IUB -> HULL -> LON
-    ctx.save(); ctx.strokeStyle=acc; ctx.globalAlpha=.45; ctx.lineWidth=1.3; ctx.setLineDash([6,6]);
-    ctx.beginPath(); route.forEach((k,i)=>{const q=nodes[k]; i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y);}); ctx.stroke(); ctx.restore();
-    if(!reduce){ rp+=.0016; if(rp>1) rp=0; }
-    { const seg=rp*(route.length-1), si=Math.min(Math.floor(seg),route.length-2), t=seg-si, A=nodes[route[si]], B=nodes[route[si+1]];
-      const x=A.x+(B.x-A.x)*t, y=A.y+(B.y-A.y)*t; ctx.beginPath(); ctx.arc(x,y,4,0,7); ctx.fillStyle=live; ctx.shadowColor=live; ctx.shadowBlur=12; ctx.fill(); ctx.shadowBlur=0; }
     nodes.forEach((n,i)=>{ const near=Math.hypot(n.x-mouse.x,n.y-mouse.y)<110;
       ctx.beginPath();ctx.arc(n.x,n.y,near?4.5:2.6,0,7);ctx.fillStyle=near?live:mut;ctx.fill();
-      if(named[i]){ctx.beginPath();ctx.arc(n.x,n.y,4,0,7);ctx.fillStyle=acc;ctx.fill();ctx.font='500 11px "IBM Plex Mono", monospace';ctx.fillStyle=acc;const tw=ctx.measureText(named[i]).width;const lx=n.x+tw+14>W?n.x-tw-9:n.x+9;const ly=n.y-9<12?n.y+18:n.y-9;ctx.fillText(named[i],lx,ly);} });
+      if(named[i]){ctx.font='500 10px "IBM Plex Mono", monospace';ctx.fillStyle=mut;ctx.fillText(named[i],n.x+8,n.y-8);} });
     if(!reduce) requestAnimationFrame(frame);
   }
   build(); frame();
