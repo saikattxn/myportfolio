@@ -504,5 +504,23 @@ body.sub section.block:first-of-type{padding-top:72px}
 .fbase{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px;padding-block:18px;border-top:1px solid var(--line);color:var(--muted);font-size:.7rem}
 .fbase a{color:inherit;text-decoration:none}
 .fbase a:hover{color:var(--accent)}
-.fmark{font-family:var(--f-display);font-weight:900;text-transform:uppercase;font-size:clamp(5rem,22vw,19rem);line-height:.78;letter-spacing:-.01em;text-align:center;white-space:nowrap;color:transparent;-webkit-text-stroke:1px color-mix(in srgb,var(--accent) 45%,transparent);margin-top:8px;margin-bottom:-.12em;user-select:none;pointer-events:none}
 @media (max-width:560px){.frow{flex-direction:column;align-items:flex-start}.fbase{flex-direction:column}}
+
+/* footer delivery: truck drops off the wordmark */
+.fdel{position:relative;margin-top:24px;padding-bottom:18px;overflow:hidden}
+.fdel-word{font-family:var(--f-display);font-weight:900;font-size:clamp(5.5rem,21vw,18rem);line-height:.82;letter-spacing:-.01em;text-align:center;white-space:nowrap;color:var(--fg);padding-inline:max(16px,env(safe-area-inset-left,0px));clip-path:inset(0 var(--hide,0px) 0 0);user-select:none}
+.fdel-word i{font-style:normal;color:var(--accent)}
+.fdel-road{height:0;border-top:2px dashed var(--line);margin-top:6px}
+.fdel-truck{position:absolute;left:0;bottom:44px;width:clamp(150px,21vw,300px);height:auto;transform:translateX(var(--tx,110vw));overflow:visible}
+.tk-box,.tk-cab{fill:var(--bg-2);stroke:var(--fg);stroke-width:2.2;stroke-linejoin:round}
+.tk-stripe{stroke:var(--accent);stroke-width:5}
+.tk-txt{fill:var(--fg);font-family:var(--f-mono);font-size:11px;letter-spacing:1.5px}
+.tk-win{fill:color-mix(in srgb,var(--live) 30%,var(--bg-2));stroke:var(--fg);stroke-width:1.6}
+.tk-light{fill:var(--accent)}
+.tk-wheel circle{fill:var(--bg);stroke:var(--fg);stroke-width:2.2}
+.tk-wheel line{stroke:var(--fg);stroke-width:2}
+.fdel.moving .tk-wheel{animation:spin .5s linear infinite}
+.fdel.moving .tk-body{animation:tkbump .22s ease-in-out infinite alternate}
+@keyframes tkbump{to{transform:translateY(-1.2px)}}
+.fdel-tag{display:block;text-align:right;margin-top:10px;padding-right:max(16px,env(safe-area-inset-right,0px));font-size:.7rem;color:var(--live);opacity:0;transform:translateY(6px);transition:opacity .5s,transform .5s}
+.fdel.done .fdel-tag{opacity:1;transform:none}

@@ -50,6 +50,29 @@
     els.forEach(el=>io.observe(el));
   }
 
+  /* footer delivery truck */
+  const fd=document.getElementById('fdel');
+  if(fd){
+    const word=document.getElementById('fdWord'), truck=document.getElementById('fdTruck');
+    let raf=0, ran=false;
+    const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+    const place=p=>{ const W=fd.clientWidth, tw=truck.getBoundingClientRect().width;
+      const x=-tw+p*(W+tw*2);                     // truck travels from off-left to off-right
+      truck.style.setProperty('--tx',x+'px');
+      word.style.setProperty('--hide',Math.max(0,W-x)+'px'); }; // reveal everything behind the truck
+    const finish=()=>{ fd.classList.remove('moving'); fd.classList.add('done'); word.style.setProperty('--hide','0px'); truck.style.setProperty('--tx',(fd.clientWidth+400)+'px'); };
+    const run=()=>{ if(ran) return; ran=true; fd.classList.add('moving'); const t0=performance.now(), dur=3200;
+      const step=now=>{ const t=Math.min(1,(now-t0)/dur); place(ease(t)); if(t<1) raf=requestAnimationFrame(step); else finish(); };
+      raf=requestAnimationFrame(step); };
+    if(reduce || !('IntersectionObserver' in window)){ finish(); }
+    else {
+      place(0);
+      const io2=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ run(); io2.disconnect(); } }),{threshold:.6});
+      io2.observe(fd);
+      window.addEventListener('resize',()=>{ if(fd.classList.contains('done')) finish(); });
+    }
+  }
+
   /* mobile menu */
   const mb=document.getElementById('menuBtn'), mn=document.getElementById('mnav');
   if(mb&&mn) mb.addEventListener('click',()=>{ const open=mn.hidden; mn.hidden=!open; mb.setAttribute('aria-expanded',String(open)); });
