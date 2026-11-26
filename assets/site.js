@@ -50,27 +50,57 @@
     els.forEach(el=>io.observe(el));
   }
 
-  /* footer delivery truck */
+  /* footer delivery: truck drives in, letters pop out of it and land full size */
   const fd=document.getElementById('fdel');
   if(fd){
     const word=document.getElementById('fdWord'), truck=document.getElementById('fdTruck');
-    let raf=0, ran=false;
+    // split the name into letters once
+    if(!word.dataset.split){
+      const nodes=[...word.childNodes]; word.textContent='';
+      nodes.forEach(n=>{
+        if(n.nodeType===3){ [...n.textContent].forEach(ch=>{ const s=document.createElement('span'); s.className='fl'; s.textContent=ch===' '?' ':ch; word.appendChild(s); }); }
+        else { n.classList.add('fl'); word.appendChild(n); }
+      });
+      word.dataset.split='1';
+    }
+    const letters=[...word.querySelectorAll('.fl')];
     const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
-    const place=p=>{ const W=fd.clientWidth, tw=truck.getBoundingClientRect().width;
-      const x=-tw+p*(W+tw*2);                     // truck travels from off-left to off-right
-      truck.style.setProperty('--tx',x+'px');
-      word.style.setProperty('--hide',Math.max(0,W-x)+'px'); }; // reveal everything behind the truck
-    const finish=()=>{ try{ sessionStorage.setItem('aa-delivered','1'); }catch(e){} fd.classList.remove('moving'); fd.classList.add('done'); word.style.setProperty('--hide','0px'); truck.style.setProperty('--tx',(fd.clientWidth+400)+'px'); };
-    const run=()=>{ if(ran) return; ran=true; fd.classList.add('moving'); const t0=performance.now(), dur=3200;
-      const step=now=>{ const t=Math.min(1,(now-t0)/dur); place(ease(t)); if(t<1) raf=requestAnimationFrame(step); else finish(); };
-      raf=requestAnimationFrame(step); };
-    let seen=false; try{ seen=sessionStorage.getItem('aa-delivered')==='1'; }catch(e){}
-    if(reduce || seen || !('IntersectionObserver' in window)){ finish(); }
+    const setX=x=>truck.style.setProperty('--tx',x+'px');
+    const drive=(from,to,dur)=>new Promise(res=>{ const t0=performance.now(); fd.classList.add('moving');
+      const step=now=>{ const t=Math.min(1,(now-t0)/dur); setX(from+(to-from)*ease(t)); if(t<1) requestAnimationFrame(step); else { fd.classList.remove('moving'); res(); } };
+      requestAnimationFrame(step); });
+    const showAll=()=>{ letters.forEach(l=>{ l.style.opacity=1; l.style.transform='none'; }); fd.classList.add('done'); setX(fd.clientWidth+400); };
+    let ran=false;
+    const run=async()=>{
+      if(ran) return; ran=true;
+      const W=fd.clientWidth, tw=truck.getBoundingClientRect().width;
+      letters.forEach(l=>{ l.style.opacity=0; });
+      setX(-tw);
+      const park=Math.round(W*0.5-tw/2);
+      await drive(-tw,park,1300);                                   // 1. truck drives in and parks
+      const tb=truck.getBoundingClientRect(); const box={x:tb.left+tb.width*0.32,y:tb.top+tb.height*0.4};
+      const scale0=Math.min(1,(tb.height*0.55)/word.getBoundingClientRect().height);
+      const anims=letters.map((l,i)=>{                              // 2. letters pop out and grow
+        const r=l.getBoundingClientRect(); const dx=box.x-(r.left+r.width/2), dy=box.y-(r.top+r.height/2);
+        l.style.opacity=1;
+        return l.animate([
+          {transform:`translate(${dx}px,${dy}px) scale(${scale0})`,opacity:0},
+          {transform:`translate(${dx*0.55}px,${dy-60}px) scale(${scale0*1.6})`,opacity:1,offset:.35},
+          {transform:'translate(0,0) scale(1.12)',offset:.8},
+          {transform:'translate(0,0) scale(1)',opacity:1}
+        ],{duration:720,delay:i*110,easing:'cubic-bezier(.25,.8,.3,1)',fill:'backwards'}).finished;
+      });
+      await Promise.all(anims); letters.forEach(l=>{ l.style.transform='none'; });
+      fd.classList.add('done');
+      await drive(park,W+40,1100);                                  // 3. truck drives off
+      setX(W+400);
+    };
+    if(reduce || !('IntersectionObserver' in window) || !letters[0].animate){ showAll(); }
     else {
-      place(0);
+      letters.forEach(l=>{ l.style.opacity=0; }); setX(-1000);
       const io2=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ run(); io2.disconnect(); } }),{threshold:.6});
       io2.observe(fd);
-      window.addEventListener('resize',()=>{ if(fd.classList.contains('done')) finish(); });
+      window.addEventListener('resize',()=>{ if(fd.classList.contains('done')) setX(fd.clientWidth+400); });
     }
   }
 
